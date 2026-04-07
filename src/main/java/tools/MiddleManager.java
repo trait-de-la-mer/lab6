@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 import Collection.*;
 import app.Main;
@@ -24,6 +25,7 @@ public class MiddleManager {
             if (type == null) {
                 Requester<Objects> requester = new Requester<>();
                 pullRequest(requester, name, null);
+                sendObj(requester);
             } else if (!type.isPrimitive()) {
                 if (len > 1) {Consoll.printSmt("Тут аргумент не очень нужны, но ладно");}
                 if (type.equals(LabWork.class)) {
@@ -45,6 +47,7 @@ public class MiddleManager {
                     String arg = nameCommand[1];
                     Requester<String> requester = new Requester<>();
                     pullRequest(requester, nameCommand[0], arg);
+                    sendObj(requester);
                 } else {Consoll.printSmt("что-то не так с кол-ом аргументов");}
             }
         } else {Consoll.printSmt("уверен что написал правильно?");}
@@ -67,9 +70,8 @@ public class MiddleManager {
             out.flush();
             System.out.println("Отправлено");
             // Requester<T> response = (Requester<T>) in.readObject();
-            System.out.println("Получено");
             //TODO ретернуть и обработать ответ
-        } catch (EOFException e){
+        } catch (EOFException|SocketException e){
             System.out.println("Сервер отлючился :(");
         } catch (IOException e) {
             System.out.println(e.getMessage());
