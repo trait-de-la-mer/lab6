@@ -1,12 +1,9 @@
-import tools.Requester;
-
-import java.io.*;
-import java.net.*;
+import tools.ConnectManager;
 
 public class Resever {
     public static void main(String[] args) {
         int port = 6789;
-        ConncetManager cm = new ConncetManager();
+        ConnectManager cm = new ConnectManager();
         cm.start(port);
     }
 }

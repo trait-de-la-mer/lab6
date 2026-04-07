@@ -1,14 +1,15 @@
-import org.w3c.dom.ls.LSOutput;
-import tools.Requester;
+package tools;
+
+import Collection.LabWork;
+import Collection.Person;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ConncetManager {
+public class ConnectManager {
     private Socket sock;
     private ServerSocket serv;
     private ObjectInputStream in;
@@ -44,8 +45,13 @@ public class ConncetManager {
             Object obj = in.readObject();
             if (obj instanceof Requester req) {
                 System.out.println("Получено: " + req);
-                //TODO ОБРАБОТКА
-            }
+                String name = req.getCommand();
+                if (req.getArgs() instanceof LabWork lab) {
+                    lab = (LabWork) req.getArgs();
+                } else if (req.getArgs() instanceof Person person) {
+                    person = (Person) req.getArgs();
+                } else {
+                }            }
         }
 //        closeClientResources();
   //      System.out.println("Клиент отключён, ждём следующего...");
