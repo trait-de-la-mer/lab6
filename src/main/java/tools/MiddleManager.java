@@ -10,8 +10,11 @@ import Collection.*;
 import app.Main;
 
 public class MiddleManager {
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+    private Socket socket;
     private static final LinkedList<String> history = new LinkedList<>();
-    public void sendCom(String... nameCommand) {
+    public void sendCom(String... nameCommand) { // проверяет на арг-ты и просит ввести сложные арг-ты и дает команду отпр
         if (nameCommand != null && nameCommand.length != 0 && !Objects.equals(nameCommand[0], "")
                 && Main.commands.containsKey(nameCommand[0])) {
             int len = nameCommand.length;
@@ -51,23 +54,23 @@ public class MiddleManager {
             requester.setArgs(obj);
             requester.setCommand(name);
     }
+    public MiddleManager(int port) throws IOException {
+        socket = new Socket("localhost", port);
+        Consoll.printSmt("Вроде подключились по порту: " + port);
+        out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
+    }
 
     public <T> void sendObj(Requester<T> requester) {
-        try (Socket sock = new Socket("localhost", 6789);
-             ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-             ObjectInputStream ois = new ObjectInputStream(sock.getInputStream())) {
-
-            sock.setSoTimeout(5000);
-            System.out.println("Отправлено: " + requester);
-            oos.writeObject(requester);
-            oos.flush();
-            Requester response = (Requester) ois.readObject();
-            System.out.println("Получено: " + response);
+        try {
+            out.writeObject(requester);
+            out.flush();
+            System.out.println("Отправлено");
+            // Requester<T> response = (Requester<T>) in.readObject();
+            System.out.println("Получено");
+            //TODO ретернуть и обработать ответ
         } catch (EOFException e){
-            System.out.println("Сервер отлючился");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("xd кнш");
+            System.out.println("Сервер отлючился :(");
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
