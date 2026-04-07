@@ -42,7 +42,7 @@ public class Consoll {
         return generateNextLine().trim();
     }
 
-    public void startConsole(){
+    public void startConsole() {
         String line;
         do{
             line = generateNextLine().toLowerCase(Locale.ENGLISH).trim().replaceAll("\\s+", " ");

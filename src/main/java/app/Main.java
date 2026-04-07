@@ -5,6 +5,7 @@ import tools.Command;
 import tools.Consoll;
 import tools.MiddleManager;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Main {
@@ -16,6 +17,7 @@ public class Main {
         commands.put("remove", new Command(1, int.class));
         MiddleManager mm = new MiddleManager();
         Consoll consoll = new Consoll(mm);
-        consoll.startConsole();
+            consoll.startConsole();
+
     }
 }
