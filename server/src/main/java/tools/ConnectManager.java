@@ -56,20 +56,23 @@ public class ConnectManager {
         out = new ObjectOutputStream(sock.getOutputStream());
         while (true) {
             Object obj = in.readObject();
-            if (obj instanceof Requester req) {
+            if (obj instanceof Requester<?> req) {
                 System.out.println("Получено: " + req);
-                String name = req.getCommand();
-                Command com = commandManager.getCommands().get(name);
-                if (req.getArgs() instanceof LabWork lab) {
-                    lab = (LabWork) req.getArgs();
-                    String text = com.execute(lab);
+                Command com = commandManager.getCommands().get(req.getCommand());
+                if (com != null) {
+                    String text;
+                    try {
+                        text = com.execute(req.getArgs());
+                    } catch (IllegalArgumentException ex){
+                        text = ex.getMessage();
+                    } catch (Exception e) {
+                        text = "хз что случилось " + e.getMessage();
+                    }
                     sendSmt(text);
-                } else if (req.getArgs() instanceof Person person) {
-                    person = (Person) req.getArgs();
-                } else if (req.getArgs() instanceof String str) {
+                } else {
+                    System.out.println("почему-то коммманда = нул");
                 }
             }
-            //TODO вызвать мапу команд и выполнить команду с аргументом
         }
     }
 

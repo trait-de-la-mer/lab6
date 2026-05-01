@@ -6,6 +6,15 @@ public class Requester<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private String command;
     private T args;
+    private Class<T> objectClass;
+
+    public Class<T> getObjectClass() {
+        return objectClass;
+    }
+
+    public void setObjectClass(Class<T> objectClass) {
+        this.objectClass = objectClass;
+    }
 
     public String getCommand() {
         return command;
@@ -28,6 +37,7 @@ public class Requester<T> implements Serializable {
         return "Requester{" +
                 "command='" + command + '\'' +
                 ", args=" + args +
+                ", objectClass=" + objectClass +
                 '}';
     }
 }

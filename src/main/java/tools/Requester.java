@@ -9,6 +9,11 @@ public class Requester<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private String command;
     private T args;
+    private Class<T> objectClass;
+
+    public void setObjectClass(Class<T> objectClass) {
+        this.objectClass = objectClass;
+    }
 
     public String getCommand() {
         return command;

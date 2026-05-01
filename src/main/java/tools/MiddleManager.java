@@ -51,8 +51,8 @@ public class MiddleManager {
                 if (len - 1 == argCount) {
                     //тут можно сделать чтобы несколько аргуметнов отсылалось при необзодимости но пока незачем
                     String arg = nameCommand[1];
-                    Requester<String> requester = new Requester<>();
-                    pullRequest(requester, nameCommand[0], arg);
+                    Requester<Integer> requester = new Requester<>();
+                    pullRequest(requester, nameCommand[0], Integer.parseInt(arg));
                     sendObj(requester);
                 } else {Consoll.printSmt("что-то не так с кол-ом аргументов");}
             }
@@ -62,6 +62,7 @@ public class MiddleManager {
     public <T> void pullRequest(Requester<T> requester, String name, T obj){
             requester.setArgs(obj);
             requester.setCommand(name);
+            requester.setObjectClass((Class<T>) obj.getClass());
     }
     public MiddleManager(int port) throws IOException {
         socket = new Socket("localhost", port);

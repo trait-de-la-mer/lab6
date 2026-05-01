@@ -14,6 +14,7 @@ public class Add extends Command<LabWork>{
         CollectionManager cm = getCollectionManager();
         arg.setId(cm.generateId());
         cm.addElement(arg);
+        System.out.println(getCollectionManager().getLabCollection().toString());
         return "Успешно добавлено";
     }
 }

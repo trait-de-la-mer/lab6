@@ -51,7 +51,6 @@ public class Consoll {
         do{
             line = generateNextLine().toLowerCase(Locale.ENGLISH).trim().replaceAll("\\s+", " ");
             String[] comAndArgs = line.split(" ");
-            System.out.println(111);
             mm.sendCom(comAndArgs);
         } while (true);
     }
