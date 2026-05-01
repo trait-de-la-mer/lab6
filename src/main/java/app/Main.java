@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class Main {
+    /**
+     * задаем порты, команды доступные на клиенте и подключаемся
+     */
     public static  HashMap<String, Command> commands = new HashMap<>();
     private static int port = 6789;
     public static void main(String[] args) {

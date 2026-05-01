@@ -8,6 +8,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Command {
+    /**
+     * класс для формирования команды и аргументов команды с их классом для отправки на сервер
+     */
 
     private final int argCount;;
     private final Class<?> objectClass; // для OBJECT

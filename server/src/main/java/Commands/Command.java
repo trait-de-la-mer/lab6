@@ -32,5 +32,5 @@ public abstract class Command<T>{
         return name;
     }
 
-    public abstract void execute(T arg);
+    public abstract String execute(T arg);
 }

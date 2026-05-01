@@ -2,6 +2,7 @@ package tools;
 
 import Collection.LabWork;
 import Collection.Person;
+import Commands.Command;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,10 +11,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ConnectManager {
+    /**
+     * создаем и закрываем с клиентом подключение при необходимости
+     * команды выполняются тут
+     *
+     * ща попробую на вход дать командный менеджер чтобы через него выполнять окманды
+     */
     private Socket sock;
     private ServerSocket serv;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private CommandManager commandManager;
+
+    public ConnectManager(CommandManager commandManager) {
+        this.commandManager = commandManager;
+    }
 
     public void start(int port) {
         try {
@@ -30,7 +42,8 @@ public class ConnectManager {
                 }
             }
         } catch (Exception e) {
-            System.err.println("скорее всего порт занят");
+            System.out.println(e.getMessage());
+            System.err.println("скорее всего порт занят (connectNanager while)");
             closeClientResources();
         }
     }
@@ -39,22 +52,25 @@ public class ConnectManager {
         System.out.println("Ожидание клиента...");
         sock = serv.accept();
         System.out.println("Подключен");
-        out = new ObjectOutputStream(sock.getOutputStream());
         in = new ObjectInputStream(sock.getInputStream());
+        out = new ObjectOutputStream(sock.getOutputStream());
         while (true) {
             Object obj = in.readObject();
             if (obj instanceof Requester req) {
                 System.out.println("Получено: " + req);
                 String name = req.getCommand();
+                Command com = commandManager.getCommands().get(name);
                 if (req.getArgs() instanceof LabWork lab) {
                     lab = (LabWork) req.getArgs();
+                    String text = com.execute(lab);
+                    sendSmt(text);
                 } else if (req.getArgs() instanceof Person person) {
                     person = (Person) req.getArgs();
-                } else {
-                }            }
+                } else if (req.getArgs() instanceof String str) {
+                }
+            }
+            //TODO вызвать мапу команд и выполнить команду с аргументом
         }
-//        closeClientResources();
-  //      System.out.println("Клиент отключён, ждём следующего...");
     }
 
     private void closeClientResources() {
@@ -66,5 +82,12 @@ public class ConnectManager {
     public void stop() throws IOException {
         closeClientResources();
         if (serv != null && !serv.isClosed()) serv.close();
+    }
+
+    public void sendSmt(String text) throws IOException {
+        Requester<String> requester = new Requester<>();
+        requester.setArgs(text);
+        out.writeObject(requester);
+        out.flush();
     }
 }

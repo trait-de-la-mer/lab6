@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Consoll {
+    /**
+     * консоль которая показывает данные пользователю, задает откуда читать команды, и запрашивает у него данные
+     * взаимодействует с мидлМенеджером
+     */
     static ArrayList<String> files = new ArrayList<>(); //показывает вложенность
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     static ArrayList<InputStream> readers = new ArrayList<>();

@@ -6,11 +6,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.SQLOutput;
 import java.util.*;
 import Collection.*;
 import app.Main;
 
 public class MiddleManager {
+    /**
+     * проверяет является ли введенное слово командой и проверят аргументы
+     * подключается к серверу (при создании объекта менеджера)
+     * отправляет данные к серверу типа реквестер
+     */
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Socket socket;
@@ -69,13 +75,19 @@ public class MiddleManager {
             out.writeObject(requester);
             out.flush();
             System.out.println("Отправлено");
-            // Requester<T> response = (Requester<T>) in.readObject();
-            //TODO ретернуть и обработать ответ
+            Object obj = in.readObject();
+            Requester<String> answer = new Requester<>();
+            if (obj instanceof Requester) {
+                answer = (Requester<String>) obj;
+            }
+            Consoll.printSmt(answer.getArgs());
         } catch (EOFException|SocketException e){
             System.out.println("Сервер отлючился :(");
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Я в душе не чаю как не может привестись к типу обджект, иди поплачь");
         }
     }
 }

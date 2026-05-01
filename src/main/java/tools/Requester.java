@@ -3,6 +3,9 @@ package tools;
 import java.io.Serializable;
 
 public class Requester<T> implements Serializable {
+    /**
+     * класс для отправки на сервер, где есть название команды, аргумент и класс аргумента
+     */
     private static final long serialVersionUID = 1L;
     private String command;
     private T args;
