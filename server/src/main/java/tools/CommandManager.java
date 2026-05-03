@@ -18,7 +18,15 @@ public class CommandManager {
 
     public <T> void executC(String name, T arg){
         Command cmd = commands.get(name);
-        cmd.execute(arg);
+        try {
+            cmd.execute(arg);
+            if (history.size() == 5) {
+                history.removeLast();
+            }
+            history.addFirst(name);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     public HashMap<String, Command<?>> getCommands() {
         return commands;

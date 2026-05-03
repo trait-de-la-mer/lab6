@@ -49,11 +49,26 @@ public class MiddleManager {
                 }
             } else {
                 if (len - 1 == argCount) {
-                    //тут можно сделать чтобы несколько аргуметнов отсылалось при необзодимости но пока незачем
-                    String arg = nameCommand[1];
-                    Requester<Integer> requester = new Requester<>();
-                    pullRequest(requester, nameCommand[0], Integer.parseInt(arg));
-                    sendObj(requester);
+                    if (type.equals(int.class)) {
+                        String arg = nameCommand[1];
+                        try {
+                            Requester<Integer> requester = new Requester<>();
+                            pullRequest(requester, nameCommand[0], Integer.parseInt(arg));
+                            sendObj(requester);
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверный тип аргумента");
+                        }
+                    }
+                    else if (type.equals(double.class)){
+                        String arg = nameCommand[1];
+                        try {
+                            Requester<Double> requester = new Requester<>();
+                            pullRequest(requester, nameCommand[0], Double.parseDouble(arg));
+                            sendObj(requester);
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Неверный тип аргумента");
+                        }
+                    }
                 } else {Consoll.printSmt("что-то не так с кол-ом аргументов");}
             }
         } else {Consoll.printSmt("уверен что написал правильно?");}

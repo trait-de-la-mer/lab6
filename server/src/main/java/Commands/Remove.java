@@ -15,11 +15,7 @@ public class Remove extends Command<Integer> {
 
     public String execute(Integer args) {
         int key;
-        try{
-            key = args;
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Аргумент должен быть int");
-        }
+        key = args;
         CollectionManager cm = getCollectionManager();
         Iterator<LabWork> iterator = cm.getLabCollection().iterator();
         int counter = 0;

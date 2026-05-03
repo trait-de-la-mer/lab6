@@ -4,7 +4,8 @@ import Collection.LabWork;
 import tools.CollectionManager;
 
 public class Add extends Command<LabWork>{
-    {setName("add");}
+    {setName("add");
+        setInfo("удаляет элемент по id");}
     public Add(CollectionManager cm) {
         super(cm);
     }
