@@ -28,7 +28,7 @@ public class CommandManager {
             System.out.println(e.getMessage());
         }
     }
-    public HashMap<String, Command<?>> getCommands() {
+    public static HashMap<String, Command<?>> getCommands() {
         return commands;
     }
 
