@@ -17,7 +17,7 @@ public class History extends Command{
     public String execute(Object arg) {
         String answer = "";
         for (String i : CommandManager.getHistory()) {
-            answer += i;
+            answer += i + "\n";
         }
         return answer;
     }

@@ -16,16 +16,24 @@ public class CommandManager {
         }
     }
 
-    public <T> void executC(String name, T arg){
-        Command cmd = commands.get(name);
+    public <T> String executC(Command cmd, T args){
         try {
-            cmd.execute(arg);
+            String text;
+            try {
+                text = cmd.execute(args);
+            } catch (IllegalArgumentException ex){
+                text = ex.getMessage();
+            } catch (Exception e) {
+                text = "хз что случилось " + e.getMessage();
+            }
             if (history.size() == 5) {
                 history.removeLast();
             }
-            history.addFirst(name);
+            history.addFirst(cmd.getName());
+            return text;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return "непредвединная ошибка";
         }
     }
     public static HashMap<String, Command<?>> getCommands() {

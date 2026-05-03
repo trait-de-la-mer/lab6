@@ -20,8 +20,10 @@ public class Main {
         commands.put("help", new Command(0));
         commands.put("remove", new Command(1, int.class));
         commands.put("clear", new Command(0));
-        commands.put("countLessMin", new Command(1, Double.class));
+        commands.put("countlessmin", new Command(1, double.class));
         commands.put("head", new Command(0));
+        commands.put("info", new Command(0));
+        commands.put("history", new Command(0));
         MiddleManager mm = null;
         try{
             mm = new MiddleManager(port);

@@ -23,12 +23,13 @@ public class MiddleManager {
     private static final LinkedList<String> history = new LinkedList<>();
     public void sendCom(String... nameCommand) { // проверяет на арг-ты и просит ввести сложные арг-ты и дает команду отпр
         if (nameCommand != null && nameCommand.length != 0 && !Objects.equals(nameCommand[0], "")
-                && Main.commands.containsKey(nameCommand[0])) {
+                && Main.commands.containsKey(nameCommand[0].toLowerCase())) {
             int len = nameCommand.length;
             String name = nameCommand[0];
             int argCount = Main.commands.get(name).getArgCount();
             Class<?> type = Main.commands.get(name).getObjectClass();
             if (type == null) {
+                if (len > 1) {Consoll.printSmt("Тут аргумент не очень нужны, но ладно");}
                 Requester<Objects> requester = new Requester<>();
                 pullRequest(requester, name, null);
                 sendObj(requester);
@@ -71,13 +72,20 @@ public class MiddleManager {
                     }
                 } else {Consoll.printSmt("что-то не так с кол-ом аргументов");}
             }
-        } else {Consoll.printSmt("уверен что написал правильно?");}
+        } else {
+            System.out.println(nameCommand != null);
+            System.out.println(nameCommand.length != 0);
+            System.out.println(!Objects.equals(nameCommand[0], ""));
+            System.out.println(Main.commands.containsKey(nameCommand[0]));
+            Consoll.printSmt("уверен что написал правильно?");}
     }
 
     public <T> void pullRequest(Requester<T> requester, String name, T obj){
-            requester.setArgs(obj);
-            requester.setCommand(name);
+        requester.setArgs(obj);
+        requester.setCommand(name);
+        if (obj != null) {
             requester.setObjectClass((Class<T>) obj.getClass());
+        }
     }
     public MiddleManager(int port) throws IOException {
         socket = new Socket("localhost", port);

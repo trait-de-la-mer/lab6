@@ -7,7 +7,7 @@ import tools.Consoll;
 public class CountLessMin extends Command<Double>{
     {
         setName("countLessMin");
-        setInfo("выводит все эл-ты, значение поля author которых меньше заданного");
+        setInfo("вывести количество элементов, значение поля minimalPoint которых меньше заданного");
     }
 
     public CountLessMin(CollectionManager cm) {

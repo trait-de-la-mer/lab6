@@ -60,14 +60,7 @@ public class ConnectManager {
                 System.out.println("Получено: " + req);
                 Command com = commandManager.getCommands().get(req.getCommand());
                 if (com != null) {
-                    String text;
-                    try {
-                        text = com.execute(req.getArgs());
-                    } catch (IllegalArgumentException ex){
-                        text = ex.getMessage();
-                    } catch (Exception e) {
-                        text = "хз что случилось " + e.getMessage();
-                    }
+                    String text = commandManager.executC(com, req.getArgs());
                     sendSmt(text);
                 } else {
                     System.out.println("почему-то коммманда = нул");

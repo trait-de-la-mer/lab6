@@ -15,7 +15,7 @@ public class Help extends Command{
     public String execute(Object args) {
         String answer = "";
         for (String nameCommand : CommandManager.getCommands().keySet()){
-            answer = nameCommand + " - " + CommandManager.getCommands().get(nameCommand).getInfo();
+            answer += nameCommand + " - " + CommandManager.getCommands().get(nameCommand).getInfo() + "\n";
         }
         return answer;
     }
