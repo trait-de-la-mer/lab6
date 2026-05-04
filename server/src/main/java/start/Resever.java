@@ -18,7 +18,8 @@ public class Resever {
                 new History(collectionManager),
                 new Help(collectionManager),
                 new Info(collectionManager),
-                new Show(collectionManager)
+                new Show(collectionManager),
+                new Update(collectionManager)
         );
         ConnectManager cm = new ConnectManager(commandManager);
         cm.start(port);

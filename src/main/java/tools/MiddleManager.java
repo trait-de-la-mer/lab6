@@ -26,9 +26,28 @@ public class MiddleManager {
                 && Main.commands.containsKey(nameCommand[0].toLowerCase())) {
             int len = nameCommand.length;
             String name = nameCommand[0];
+            Command cmd = Main.commands.get(name);
             int argCount = Main.commands.get(name).getArgCount();
             Class<?> type = Main.commands.get(name).getObjectClass();
-            if (type == null) {
+
+            if (name.equals("update")) {
+                if (len < 2) {
+                    Consoll.printSmt("Нужно указать ID!");
+                    return;
+                }
+                try {
+                    Long id = Long.parseLong(nameCommand[1]);
+                    LabWork labWork = cmd.makeLab();
+
+                    UpdateArgs updateArgs = new UpdateArgs(id, labWork);
+                    Requester<UpdateArgs> requester = new Requester<>();
+                    pullRequest(requester, name, updateArgs);
+                    requester.setObjectClass(UpdateArgs.class);
+                    sendObj(requester);
+                } catch (NumberFormatException e) {
+                    Consoll.printSmt("ID должен быть числом!");
+                }
+            } else if (type == null) {
                 if (len > 1) {Consoll.printSmt("Тут аргумент не очень нужны, но ладно");}
                 Requester<Objects> requester = new Requester<>();
                 pullRequest(requester, name, null);

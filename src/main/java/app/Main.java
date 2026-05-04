@@ -4,6 +4,7 @@ import Collection.LabWork;
 import tools.Command;
 import tools.Consoll;
 import tools.MiddleManager;
+import tools.UpdateArgs;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class Main {
         commands.put("head", new Command(0));
         commands.put("info", new Command(0));
         commands.put("history", new Command(0));
+        commands.put("update", new Command(1, UpdateArgs.class));
         MiddleManager mm = null;
         try{
             mm = new MiddleManager(port);
