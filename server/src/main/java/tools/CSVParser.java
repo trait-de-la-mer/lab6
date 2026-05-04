@@ -68,7 +68,7 @@ public class CSVParser {
         return labs;
     }
     public void convertToCSV(LinkedList<LabWork> labs) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter("ewq.csv"))) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
             String[] header = {"id", "name", "creationDate", "minimalPoints", "difficulty", "x", "y", "personName", "personWeight", "eye"};
             writer.writeNext(header);
             for (LabWork lab : labs) {

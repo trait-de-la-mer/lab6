@@ -48,6 +48,7 @@ public class Consoll {
 
     public void startConsole() {
         String line;
+        boolean running = true;
         do{
             line = generateNextLine().toLowerCase(Locale.ENGLISH).trim().replaceAll("\\s+", " ");
             String[] comAndArgs = line.split(" ");
@@ -59,11 +60,11 @@ public class Consoll {
                 }
             }else if (comAndArgs[0].equals("exit")){
                 mm.closeConnection();
-                System.exit(0);
+                running = false;
             }else {
                 mm.sendCom(comAndArgs);
             }
-        } while (true);
+        } while (running);
     }
 
     public static void printSmt(String str){

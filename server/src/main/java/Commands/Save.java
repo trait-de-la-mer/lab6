@@ -11,6 +11,7 @@ public class Save extends Command{
 
     @Override
     public String execute(Object arg) {
+        System.out.println(1);
         CSVParser jParser = new CSVParser(getCollectionManager());
         jParser.convertToCSV(getCollectionManager().getLabCollection());
         return "saving";
