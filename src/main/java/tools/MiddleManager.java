@@ -133,4 +133,15 @@ public class MiddleManager {
             System.out.println("Я в душе не чаю как не может привестись к типу обджект, иди поплачь");
         }
     }
+
+    public void closeConnection() {
+        try {
+            if (out != null) out.close();
+            if (in != null) in.close();
+            if (socket != null && !socket.isClosed()) socket.close();
+            Consoll.printSmt("Соединение закрыто");
+        } catch (IOException e) {
+            Consoll.printSmt("Ошибка при закрытии соединения: " + e.getMessage());
+        }
+    }
 }

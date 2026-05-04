@@ -51,7 +51,18 @@ public class Consoll {
         do{
             line = generateNextLine().toLowerCase(Locale.ENGLISH).trim().replaceAll("\\s+", " ");
             String[] comAndArgs = line.split(" ");
-            mm.sendCom(comAndArgs);
+            if (comAndArgs[0].equals("script")){
+                try {
+                    executeScript(comAndArgs[1]);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }else if (comAndArgs[0].equals("exit")){
+                mm.closeConnection();
+                System.exit(0);
+            }else {
+                mm.sendCom(comAndArgs);
+            }
         } while (true);
     }
 
@@ -82,6 +93,20 @@ public class Consoll {
             return "";
         } catch (IOException e) {
             throw new RuntimeException("Непредвиденная ошибка ввода");
+        }
+    }
+
+    public void executeScript(String file){
+        if (Consoll.getFiles().contains(file)) throw new IllegalArgumentException("Файл уже в обработке, ты хочешь рекурсию?");
+        Consoll.setScriptFlag(true);
+        try{
+            InputStream reader = new FileInputStream(file);
+            Consoll.setScriptFlag(true);
+            Consoll.addFile(file);
+            Consoll.addReader(reader);
+            Consoll.setReader(reader);
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл: " + file + " - не найден");
         }
     }
 }

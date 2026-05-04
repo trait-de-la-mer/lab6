@@ -22,7 +22,6 @@ public class Update extends Command<UpdateArgs>{
     public String execute(UpdateArgs updateArgs) {
         Long needId = updateArgs.getId();
         LabWork labWork = updateArgs.getLabWork();
-        boolean isIdExist = false;
         for (LabWork lab : getCollectionManager().getLabCollection()){
             Long currentId = lab.getId();
             if (Objects.equals(needId, currentId)){

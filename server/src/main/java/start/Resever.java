@@ -1,14 +1,20 @@
 package start;
 
 import Commands.*;
+import tools.CSVParser;
 import tools.CollectionManager;
 import tools.CommandManager;
 import tools.ConnectManager;
 
+import java.io.IOException;
+
 public class Resever {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int port = 6789;
         CollectionManager collectionManager = new CollectionManager();
+        CSVParser csvParser = new CSVParser(collectionManager);
+        System.out.println("Java ищет файл здесь: " + new java.io.File(".").getCanonicalPath());
+        collectionManager.setLabCollection(csvParser.parse("/home/k0idzi/IdeaProjects/lab6/server/src/main/resources/labs.csv"));
         CommandManager commandManager = new CommandManager(
                 new Add(collectionManager),
                 new Remove(collectionManager),
@@ -19,7 +25,10 @@ public class Resever {
                 new Help(collectionManager),
                 new Info(collectionManager),
                 new Show(collectionManager),
-                new Update(collectionManager)
+                new Update(collectionManager),
+                new RemoveFirst(collectionManager),
+                new PrintUniqAthors(collectionManager),
+                new LessThanAuthor(collectionManager)
         );
         ConnectManager cm = new ConnectManager(commandManager);
         cm.start(port);
