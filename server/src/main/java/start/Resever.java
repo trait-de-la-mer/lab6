@@ -13,7 +13,6 @@ public class Resever {
         int port = 6789;
         CollectionManager collectionManager = new CollectionManager();
         CSVParser csvParser = new CSVParser(collectionManager);
-        System.out.println("Java ищет файл здесь: " + new java.io.File(".").getCanonicalPath());
         collectionManager.setLabCollection(csvParser.parse("/home/k0idzi/IdeaProjects/lab6/server/src/main/resources/labs.csv"));
         CommandManager commandManager = new CommandManager(
                 new Add(collectionManager),

@@ -7,8 +7,11 @@ import tools.Requester;
 
 import java.io.IOException;
 import java.net.Socket;
+import org.apache.logging.log4j.LogManager;  // ← Добавить
+import org.apache.logging.log4j.Logger;      // ← Добавить
 
 public class ConnectManager {
+    private static final Logger log = LogManager.getLogger(ConnectManager.class);
     private CommandManager commandManager;
     private ConnectionAcceptor connectionAcceptor;
     private ResponseSender responseSender;
@@ -39,18 +42,18 @@ public class ConnectManager {
                             responseSender.sendResponse(text);
                             //stop();
                         } else {
-                            System.out.println("команды нет в мапе");
+                            log.error("команды нет в мапе");
                         }
                     }
                 } catch (IOException | ClassNotFoundException e) {
-                    System.err.println("Клиент отключился или ошибка " + e.getMessage());
+                    log.error("Клиент отключился или ошибка " + e.getMessage());
                 } finally {
                     closeClientResources();
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.err.println("Возможно порт занят");
+            log.error(e.getMessage());
+            log.warn("Возможно порт занят");
             stop();
         }
     }
@@ -61,7 +64,7 @@ public class ConnectManager {
         try {
             if (sock != null && !sock.isClosed()) {
                 sock.close();
-                System.out.println("Сокет клиента закрыт");
+                log.warn("Сокет клиента закрыт");
             }
         } catch (IOException ignored) {}
     }
@@ -74,7 +77,7 @@ public class ConnectManager {
         try {
             connectionAcceptor.stop();
         } catch (IOException e) {
-            System.err.println("Ошибка при остановке сервера: " + e.getMessage());
+            log.error("Ошибка при остановке сервера: " + e.getMessage());
         }
     }
 

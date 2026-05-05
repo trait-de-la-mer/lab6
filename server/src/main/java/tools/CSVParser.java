@@ -6,10 +6,15 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.LinkedList;
+
+import Connecting.ConnectManager;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CSVParser {
+    private static final Logger log = LogManager.getLogger(CSVParser.class);
     static String file;
     CollectionManager collectionManager;
     public CSVParser(CollectionManager collectionManager){
@@ -54,15 +59,15 @@ public class CSVParser {
             }
 
         } catch (FileNotFoundException e) {
-            Consoll.printSmt("файл " + file + " не найден");
+            log.warn("файл " + file + " не найден");
         } catch (NumberFormatException e) {
-            Consoll.printSmt("Проверь правильность введенных данных (возможно не тот тип данных)");
+            log.warn("Проверь правильность введенных данных (возможно не тот тип данных)");
         } catch (IllegalArgumentException e) {
-            Consoll.printSmt(e.getMessage());
+            log.warn(e.getMessage());
         } catch (IOException e) {
-            Consoll.printSmt("Непредвиденная ошибка чтения файла " + file);
+            log.warn("Непредвиденная ошибка чтения файла " + file);
         } catch (Exception e) {
-            Consoll.printSmt("Ошибка, возможно что-то не так с форматом");
+            log.warn("Ошибка, возможно что-то не так с форматом");
         }
 
         return labs;
@@ -88,7 +93,7 @@ public class CSVParser {
                 writer.writeNext(line);
             }
         } catch (Exception e) {
-            Consoll.printSmt("Произошла ошибка при записи в файл ");
+            log.warn("Произошла ошибка при записи в файл ");
         }
     }
 }

@@ -1,7 +1,5 @@
 package tools;
 
-import Collection.LabWork;
-import Collection.Person;
 import Commands.Command;
 
 import java.io.IOException;
@@ -10,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ConnectManager {
+public class ConnectManagerrr {
     /**
      * создаем и закрываем с клиентом подключение при необходимости
      * команды выполняются тут
@@ -23,7 +21,7 @@ public class ConnectManager {
     private ObjectOutputStream out;
     private CommandManager commandManager;
 
-    public ConnectManager(CommandManager commandManager) {
+    public ConnectManagerrr(CommandManager commandManager) {
         this.commandManager = commandManager;
     }
 

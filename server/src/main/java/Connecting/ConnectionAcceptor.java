@@ -1,27 +1,31 @@
 package Connecting;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ConnectionAcceptor {
-        private ServerSocket serv;
+    private static final Logger log = LogManager.getLogger(ConnectionAcceptor.class);
+    private ServerSocket serv;
         public void start(int port) throws IOException {
             serv = new ServerSocket(port);
-            System.out.println("Сервер запущен на порту " + port);
+            log.info("Сервер запущен на порту " + port);
         }
 
         public Socket acceptClient() throws IOException {
-            System.out.println("Ожидание клиента...");
+            log.info("Ожидание клиента...");
             Socket client = serv.accept();
-            System.out.println("Подключен: " + client.getInetAddress());
+            log.info("Подключен: " + client.getInetAddress());
             return client;
         }
 
         public void stop() throws IOException {
             if (serv != null && !serv.isClosed()) {
                 serv.close();
-                System.out.println("Сокет закрыт");
+                log.info("Сокет закрыт");
             }
         }
 

@@ -1,0 +1,7 @@
+2026-05-05 03:41:18.972 [main] INFO  Connecting.ConnectionAcceptor - Сервер запущен на порту 6789
+2026-05-05 03:41:18.974 [main] INFO  Connecting.ConnectionAcceptor - Ожидание клиента...
+2026-05-05 03:41:20.723 [main] INFO  Connecting.ConnectionAcceptor - Подключен: /127.0.0.1
+2026-05-05 03:41:32.874 [main] INFO  Connecting.RequestReader - Получено: Requester{command='add', args=LabWork{id=1, name='2', coordinates=2;2, creationDate=2026-05-05, minimalPoint=2.0, difficulty=EASY, author: name = 2;weight = 2.0;BLACK}, objectClass=class Collection.LabWork}
+2026-05-05 03:41:55.976 [main] INFO  Connecting.RequestReader - Получено: Requester{command='show', args=null, objectClass=null}
+2026-05-05 03:42:05.998 [main] ERROR Connecting.ConnectManager - Клиент отключился или ошибка null
+2026-05-05 03:42:05.999 [main] INFO  Connecting.ConnectionAcceptor - Ожидание клиента...
