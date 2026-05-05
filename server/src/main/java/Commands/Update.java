@@ -4,9 +4,8 @@ import Collection.LabWork;
 import tools.CollectionManager;
 import tools.UpdateArgs;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Update extends Command<UpdateArgs>{
     {
@@ -22,23 +21,14 @@ public class Update extends Command<UpdateArgs>{
     public String execute(UpdateArgs updateArgs) {
         Long needId = updateArgs.getId();
         LabWork labWork = updateArgs.getLabWork();
-        for (LabWork lab : getCollectionManager().getLabCollection()){
-            Long currentId = lab.getId();
-            if (Objects.equals(needId, currentId)){
-                CollectionManager cm = getCollectionManager();
-                labWork.setId(currentId);
-                Iterator<LabWork> iterator = cm.getLabCollection().iterator();
-                int counter = 0;
-                while (iterator.hasNext()){
-                    LabWork someLabWork = iterator.next();
-                    if (Objects.equals(someLabWork.getId(), needId)){
-                        cm.changeLab(labWork, counter);
-                        cm.setLastId(cm.getLastId() - 1);
-                    }
-                    counter++;
-                }
-                return "Обновлена лаба по id " + needId;
-            }
+        Optional<LabWork> target = getCollectionManager().getLabCollection().stream()
+                .filter(lab -> Objects.equals(lab.getId(), needId))
+                .findFirst();
+        if (target.isPresent()) {
+            labWork.setId(needId);
+            getCollectionManager().getLabCollection().remove(target.get());
+            getCollectionManager().getLabCollection().add(labWork);
+            return "Обновлена лаба по id " + needId;
         }
         return "Такого id нет";
     }

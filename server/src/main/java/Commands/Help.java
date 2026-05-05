@@ -3,6 +3,8 @@ package Commands;
 import tools.CollectionManager;
 import tools.CommandManager;
 
+import java.util.stream.Collectors;
+
 public class Help extends Command{
     {setName("help");
         setInfo("Выводит все команды и их выполнение");}
@@ -13,10 +15,9 @@ public class Help extends Command{
 
     @Override
     public String execute(Object args) {
-        String answer = "";
-        for (String nameCommand : CommandManager.getCommands().keySet()){
-            answer += nameCommand + " - " + CommandManager.getCommands().get(nameCommand).getInfo() + "\n";
-        }
+        String answer = CommandManager.getCommands().entrySet().stream()
+                .map(entry -> entry.getKey() + " - " + entry.getValue().getInfo())
+                .collect(Collectors.joining("\n"));
         return answer;
     }
 }

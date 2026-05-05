@@ -4,6 +4,8 @@ import Collection.LabWork;
 import tools.CollectionManager;
 import tools.Consoll;
 
+import java.util.stream.Collectors;
+
 public class CountLessMin extends Command<Double>{
     {
         setName("countLessMin");
@@ -16,12 +18,10 @@ public class CountLessMin extends Command<Double>{
 
     @Override
     public String execute(Double arg) {
-        String answer = "";
-        for (LabWork i : getCollectionManager().getLabCollection()) {
-            if (i.getMinimalPoint() < arg) {
-                answer += i + "\n";
-            }
-        }
+        String answer = getCollectionManager().getLabCollection().stream()
+                .filter(lab -> lab.getMinimalPoint() < arg)
+                .map(LabWork::toString)
+                .collect(Collectors.joining("\n"));
         return answer;
     }
 }

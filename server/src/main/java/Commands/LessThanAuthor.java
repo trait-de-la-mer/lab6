@@ -4,6 +4,8 @@ import Collection.LabWork;
 import Collection.Person;
 import tools.CollectionManager;
 
+import java.util.stream.Collectors;
+
 public class LessThanAuthor extends Command<Person>{
     {setName("lessThanAuthor");
         setInfo("вывести элементы, значение поля author которых меньше заданного");}
@@ -13,12 +15,10 @@ public class LessThanAuthor extends Command<Person>{
 
     @Override
     public String execute(Person person) {
-        String answer = "";
-        for (LabWork lab : getCollectionManager().getLabCollection()){
-            if (lab.getAuthor().compareTo(person) < 0){
-                answer += lab.toString() + "\n";
-            }
-        }
+        String answer = getCollectionManager().getLabCollection().stream()
+                .filter(lab -> lab.getAuthor().compareTo(person) < 0)
+                .map(LabWork::toString)
+                .collect(Collectors.joining("\n"));
         return answer;
     }
 }

@@ -3,8 +3,7 @@ package Commands;
 import Collection.LabWork;
 import Collection.Person;
 import tools.CollectionManager;
-
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class PrintUniqAthors extends Command{
     {setName("uniqAuthor");
@@ -16,24 +15,10 @@ public class PrintUniqAthors extends Command{
 
     @Override
     public String execute(Object arg) {
-        String answer = "";
-        ArrayList<Person> persons = new ArrayList<>();
-        for (LabWork i : getCollectionManager().getLabCollection()){
-            boolean isAuthorExist = false;
-            Person author = i.getAuthor();
-            for (Person j : persons){
-                if (j.equals(author)) {
-                    isAuthorExist = true;
-                    break;
-                }
-            }
-            if (!isAuthorExist){
-                persons.add(author);
-            }
-        }
-        for (Person i : persons){
-            answer += i.toString() + "\n";
-        }
-        return "";
+        String answer = getCollectionManager().getLabCollection().stream()
+                .map(LabWork::getAuthor)
+                .distinct()
+                .map(Person::toString).collect(Collectors.joining("\n"));
+        return answer;
     }
 }

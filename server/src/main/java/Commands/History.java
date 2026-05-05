@@ -3,6 +3,8 @@ package Commands;
 import tools.CollectionManager;
 import tools.CommandManager;
 
+import java.util.stream.Collectors;
+
 public class History extends Command{
     {
         setName("history");
@@ -15,10 +17,7 @@ public class History extends Command{
 
     @Override
     public String execute(Object arg) {
-        String answer = "";
-        for (String i : CommandManager.getHistory()) {
-            answer += i + "\n";
-        }
+        String answer = CommandManager.getHistory().stream().collect(Collectors.joining("\n"));
         return answer;
     }
 }

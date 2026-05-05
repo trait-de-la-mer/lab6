@@ -27,9 +27,9 @@ public class Main {
         commands.put("info", new Command(0));
         commands.put("history", new Command(0));
         commands.put("update", new Command(1, UpdateArgs.class));
-        commands.put("uniqAuthor", new Command(0));
+        commands.put("uniqauthor", new Command(0));
         commands.put("remove_first", new Command(0));
-        commands.put("lessThanAuthor", new Command(1, Person.class));
+        commands.put("lessthanauthor", new Command(1, Person.class));
         MiddleManager mm = null;
         try{
             mm = new MiddleManager(port);

@@ -5,6 +5,7 @@ import Commands.Command;
 import tools.CollectionManager;
 
 import java.util.Iterator;
+import java.util.Optional;
 
 public class Remove extends Command<Integer> {
     {setName("remove");
@@ -17,15 +18,15 @@ public class Remove extends Command<Integer> {
         int key;
         key = args;
         CollectionManager cm = getCollectionManager();
-        Iterator<LabWork> iterator = cm.getLabCollection().iterator();
-        int counter = 0;
-        while (iterator.hasNext()){
-            LabWork labWork = iterator.next();
-            if (labWork.getId() == key){
-                cm.removeElement(counter);
-                return ("Эл-т удален" + key + " удален");
-            }
-            counter++;
-        }  throw new IllegalArgumentException("такого id нет");
+        Optional<LabWork> target = cm.getLabCollection().stream()
+                .filter(lab -> lab.getId() == key)
+                .findFirst();
+
+        if (target.isPresent()) {
+            cm.getLabCollection().remove(target.get());
+            return "Элемент с id " + key + " удален";
+        } else {
+            throw new IllegalArgumentException("Элемент с таким id не найден");
+        }
     }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLOutput;
 import java.util.*;
 import Collection.*;
 import app.Main;
+import org.w3c.dom.ls.LSOutput;
 
 public class MiddleManager {
     /**
@@ -92,6 +93,10 @@ public class MiddleManager {
                 } else {Consoll.printSmt("что-то не так с кол-ом аргументов");}
             }
         } else {
+            System.out.println(nameCommand != null);
+            System.out.println(nameCommand.length != 0);
+            System.out.println(!Objects.equals(nameCommand[0], ""));
+            System.out.println(Main.commands.containsKey(nameCommand[0].toLowerCase()));
             Consoll.printSmt("уверен что написал правильно?");}
     }
 
